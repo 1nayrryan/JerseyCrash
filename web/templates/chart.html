@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>{{ filename }}</h1>
+  <div class="mb-3">
+    <a href="/" class="btn btn-link">← Back</a>
+  </div>
+  <canvas id="chart" width="800" height="400"></canvas>
+
+  <script>
+    async function draw() {
+      const res = await fetch(`/data/{{ filename }}`);
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        document.getElementById('chart').remove();
+        const p = document.createElement('p');
+        p.textContent = 'No data available to chart.';
+        document.querySelector('.container').appendChild(p);
+        return;
+      }
+      const keys = Object.keys(data[0]);
+      const labelKey = keys[0];
+      const numericKey = keys.find(k => typeof data[0][k] === 'number') || keys[1];
+      const labels = data.map(r => r[labelKey]);
+      const values = data.map(r => Number(r[numericKey] || 0));
+
+      const ctx = document.getElementById('chart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: numericKey,
+            data: values,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true }
+          }
+        }
+      });
+    }
+    draw();
+  </script>
+{% endblock %}

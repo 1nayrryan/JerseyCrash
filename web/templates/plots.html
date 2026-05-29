@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>Generated Matplotlib Charts</h1>
+  <div class="mb-3">
+    <a href="/" class="btn btn-link">← Back</a>
+  </div>
+
+  {% if images %}
+    <div class="row">
+      {% for img in images %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <img src="/plots/image/{{ img }}" class="card-img-top" alt="{{ img }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ img }}</h5>
+              <a href="/plots/image/{{ img }}" target="_blank" class="btn btn-sm btn-primary">Open</a>
+              <a href="/plots/image/{{ img }}" download class="btn btn-sm btn-outline-secondary">Download</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No generated charts found in <code>output/charts</code>.</p>
+  {% endif %}
+{% endblock %}

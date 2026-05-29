@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>Available Summaries</h1>
+  <p><a href="/plots" class="btn btn-outline-primary mb-3">View Matplotlib Charts</a></p>
+  {% if files %}
+    <div class="row">
+      {% for f in files %}
+        <div class="col-md-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ f }}</h5>
+              <a href="/table/{{ f }}" class="btn btn-primary">View Table</a>
+              <a href="/chart/{{ f }}" class="btn btn-secondary">View Chart</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No summary CSV files found in <strong>output/summaries</strong>.</p>
+  {% endif %}
+{% endblock %}

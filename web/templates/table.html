@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>{{ filename }}</h1>
+  <div class="mb-3">
+    <a href="/" class="btn btn-link">← Back</a>
+    <a href="/data/{{ filename }}" class="btn btn-outline-secondary">Download JSON</a>
+  </div>
+  <div class="table-responsive">
+    {{ table_html | safe }}
+  </div>
+{% endblock %}
